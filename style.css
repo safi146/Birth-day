@@ -1,0 +1,101 @@
+:root{--plum:#2a1a2e;--blush:#f1cfcb;--rose:#d99aa2;--gold:#c9a35b;--paper:#fffaf0;--ink:#3a2840;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(ellipse at 50% 30%,#4a2b4d 0%,var(--plum) 70%);color:var(--ink);font-family:"Dancing Script","Brush Script MT",cursive;overflow:hidden}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;transition:opacity 1s ease,transform 1.2s ease;perspective:1200px}
+body.read .stage{opacity:0;transform:translateY(60px) scale(.94);pointer-events:none}
+.env{position:relative;width:min(84vw,380px);aspect-ratio:3/2;filter:drop-shadow(0 24px 30px rgba(0,0,0,.45));margin-top:14vh}
+.back{position:absolute;inset:0;background:#c98790;border-radius:6px}
+.lt{position:absolute;left:6%;right:6%;top:5%;height:90%;background:var(--paper);border-radius:4px;z-index:2;transition:transform 1.5s cubic-bezier(.5,0,.2,1);box-shadow:0 0 0 1px rgba(0,0,0,.05)}
+.lt::after{content:"Happy Birthday";position:absolute;top:18%;width:100%;text-align:center;font:2rem "Great Vibes",cursive;color:var(--ink)}
+.env.rise .lt{transform:translateY(-62%)}
+.front{position:absolute;inset:0;z-index:3;border-radius:6px;background:linear-gradient(160deg,#f6d8d4,var(--blush) 60%,#e8b8b8);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
+.to{position:absolute;z-index:4;left:0;right:0;bottom:12%;text-align:center;font:1.7rem "Great Vibes",cursive;color:#7a4552}
+.flap{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;transform-origin:50% 0;background:linear-gradient(#e9b3b6,#dda1a7);clip-path:polygon(0 0,100% 0,50% 58%);transition:transform 1s cubic-bezier(.6,0,.3,1),z-index 0s .45s}
+.env.open .flap{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;z-index:6;left:50%;top:58%;width:54px;height:54px;margin:-27px 0 0 -27px;border:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e0536a,#a5203a);color:#ffd9de;font-size:22px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.4),inset 0 0 0 3px rgba(255,255,255,.12);animation:beat 1.8s ease-in-out infinite;transition:opacity .4s,transform .5s}
+.seal:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.env.open .seal{opacity:0;transform:scale(1.5);animation:none;pointer-events:none}
+@keyframes beat{50%{transform:scale(1.12)}}
+.hint{color:var(--blush);font-size:1.3rem;opacity:.85;transition:opacity .4s}
+.env.open + .hint{opacity:0}
+.paper{position:fixed;left:50%;top:50%;width:min(94vw,620px);height:min(90dvh,900px);transform:translate(-50%,-46%) scale(.92);opacity:0;pointer-events:none;background:var(--paper);border-radius:6px;box-shadow:0 30px 70px rgba(0,0,0,.55);transition:opacity 1.1s ease,transform 1.4s cubic-bezier(.2,.7,.2,1);display:flex}
+body.read .paper{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.scroll{flex:1;overflow-y:auto;padding:clamp(24px,6vw,52px) clamp(20px,6vw,50px) 40vh;scrollbar-width:thin;scrollbar-color:var(--rose) transparent}
+.scroll p{margin:0 0 .75em;font-size:clamp(21px,5vw,27px);line-height:1.65;font-weight:500}
+.scroll b{font-weight:700}
+.scroll i{font-style:normal;color:#6a3d63}
+.scroll p:first-child{font:clamp(30px,8vw,42px)/1.3 "Great Vibes",cursive}
+.w{white-space:nowrap}
+.c{opacity:0;clip-path:inset(-30% 100% -30% 0);transition:clip-path .3s cubic-bezier(.3,.6,.3,1),opacity .2s}
+.c.on{opacity:1;clip-path:inset(-30% -10% -30% -10%)}
+.ctrl{position:absolute;right:14px;bottom:14px;font:600 1rem "Dancing Script",cursive;background:rgba(58,40,64,.9);color:#fff;border:0;border-radius:99px;padding:.5rem 1.1rem;cursor:pointer;opacity:0;transition:opacity .6s}
+body.read .ctrl{opacity:.9}
+.ctrl:focus-visible{outline:3px solid var(--gold)}
+.ctrl.hide{opacity:0!important;pointer-events:none}
+.music-btn {
+	position: fixed;
+	right: 22px;
+	bottom: 22px;
+
+	width: 45px;
+	height: 45px;
+
+	border: none;
+	border-radius: 50%;
+
+	background: rgba(255, 255, 255, 0.9);
+	color: #8b3a62;
+
+	font-size: 22px;
+	cursor: pointer;
+
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+	z-index: 1000;
+
+	opacity: 0;
+	transform: scale(0.7);
+	pointer-events: none;
+
+	transition:
+		opacity 0.5s ease,
+		transform 0.5s ease,
+		background 0.3s ease;
+}
+
+/* Show the button after opening the envelope */
+body.read .music-btn {
+	opacity: 1;
+	transform: scale(1);
+	pointer-events: auto;
+}
+
+.music-btn:hover {
+	transform: scale(1.08);
+}
+
+.music-btn.playing {
+	animation: musicPulse 1.5s infinite;
+}
+
+@keyframes musicPulse {
+	0%, 100% {
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+	}
+
+	50% {
+		box-shadow: 0 4px 25px rgba(139, 58, 98, 0.45);
+	}
+}
+
+@media (max-width: 600px) {
+	.music-btn {
+		right: 16px;
+		bottom: 16px;
+		width: 42px;
+		height: 42px;
+		font-size: 20px;
+	}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
